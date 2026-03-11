@@ -1,0 +1,40 @@
+A faire
+	Calcul de revient (avec nourriture consommee)
+	Situation(mila revient)
+	Eclosion
+	
+
+Je dois d'abord penser a un ecran
+	Dashboard 
+		filtres : date/min-max
+		Data par lot(sommer-na pour avoir les stats globales):
+			Card nb akoho total
+			Card total achats poulets
+			Card atody vendus (qtt * prix tamle date de vente ftsn,haha)
+			Card POULETS vendus (qtt * prix tamle date de vente* poids anle poulet tamle vente(somme de toutes les configs entre arrivee lot - age sem sy age sem @ vente),haha)
+				Raha misy date min dia on soustrait la valeur de poulet vendu a la date min au total
+
+			Card total nourriture consommee (oay lelike!Ty nga zao mety raha tsy fonction sql mintsy)
+			 pk? Puisque misy bdb ny prix an'ny sakafo nefa tsy tracable ny hoe oviana no nomena baba zoky 
+			Ny mila ananako :
+			1-firy sem ilay poulet
+			Comment je fais raha mandalo sem maromaro izy anatin'ilay filtre?
+			2-otrin ny prix nourriture tamin'izany
+
+			Pour la quantite je peux faire une requete
+			Je fais comme quand je cherche le poids a la vente
+			age en sem max % (date arrivee - age en sem arrivee) 
+
+
+
+			Si je fixe le prix de la nourriture ,mon probleme sera resolu instantannement
+				Fa je vais l'affronter
+			Alaina ny update de prix rehetra anatin'ilay periode dia manao logique de coulissage aveo
+
+			Na koa hoe tongavana ny epoque naha sem 0 azy dia eo no manao logique de boucle par jour (pour controller les weekends)
+			-> rehefa lany ny semaine ray dia maka ny consommation manaraka
+
+			Tslelike,okalou fa nga elah no namahana azy tamnizy sem 0?
+			
+			
+	

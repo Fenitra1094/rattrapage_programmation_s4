@@ -1,0 +1,30 @@
+c'est la todo list echno :
+    - Sql : SQL serveur
+    - FrontEnd : Angular
+    - BackEnd : node js
+
+# ===============================================================================================================
+
+Interface :
+    - Tableau avec filtrage par date (Dashboard) :
+        + Lot 
+        + Nmb d'Akoho 
+        + Achat (0 si eclot) 
+        + Sakafo (prix de sa bouffe depuis sa naissances) 
+        + Maty (Nmb de mort inserer dans un autre interface) 
+        + Poids Moyen par Akoho (en fonction des semaine influencer par la date de filtrage) 
+        + Prix de vente du lot (PU * Poid moyen * nmb d'akoho)
+        + Nmb Atody (Nmb d'atody inserer dans un autre interface - eclot - lamokany)
+        + Prix des atody (PU * Nmb d'atody)
+        + Benefice (Prix de vente - Achat - Sakafo)
+
+    - Interface d'insertion de maty (MortAkoho) :
+        + Lot (selectionner le lot)
+        + Nmb de maty
+        + Date de l'insertion
+
+    - Interface d'insertion d'atody (Atody) :
+        + Lot (selectionner le lot)
+        + Nmb d'atody
+        + Date de l'insertion
+        + type (eclot, lamokany, normal)

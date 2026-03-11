@@ -1,0 +1,56 @@
+Lot(arrivee,nombre,race,age(sem))
+	Misy akoho 
+		mm race,age
+
+
+
+description/configuration akoho par semaine 
+	Milaza ny sakafo hoaniny par semaine
+	Milaza ny fitomboany par semaine
+NB: semaine = 5 jours (sans les weekends)
+
+
+Unite de mesure en gramme
+
+Incubation?? 45j
+	Izany hoe ilay atody raha safidiana ho avadika lot dia incubation j apres l'operation no mivadika ?? 
+
+Achat 
+Sakafo lany
+Mort
+Poids moyen (poids any rehefa avy nitombo ka varotana amzay)
+Prix de vente
+
+Par inona ity prix de vente ity le TwT
+
+
+Affichage mamadika lot ana atody ho lasa akoho (ne pas oublier de specifier le nombre)
+	date atao input
+
+
+
+
+Raw
+
+Achats
+
+Ataontsika misy mere fille
+Achat(id,date,nom_fournisseur)
+AchatDetails(achat_id,race_id,quantite,pu)
+
+Question: comment je fais pour savoir a combien j'ai achete un lot
+	Sa ve hoe creer-na aloha ny lot zay vao inserer-na ny achats??
+		Tanjona : hanome ny reference anle lot miditra anle achat
+
+Ventes
+	A- akoho
+	Je vends des poulets par races ou par lots?
+	
+	B- oeufs
+	Je vends des oeufs par race ou par lot
+	Sa ve ataoko du genre:
+	{
+		Vente (id,date,nom_client)
+		VenteDetails(vente_id,lot_id,quantite)
+	}
+	

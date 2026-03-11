@@ -1,0 +1,29 @@
+<nav class="sidebar" [class.collapsed]="collapsed">
+  <div class="sidebar-header">
+    @if (!collapsed) {
+      <span class="logo">AKOHO</span>
+    }
+    <button class="toggle-btn" (click)="toggle()">
+      @if (collapsed) {
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      } @else {
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      }
+    </button>
+  </div>
+
+  @if (!collapsed) {
+    <div class="sidebar-nav">
+      @for (group of navGroups; track group.label) {
+        <div class="nav-group">
+          <div class="nav-group-label">{{ group.label }}</div>
+          @for (item of group.items; track item.route) {
+            <a class="nav-item" [routerLink]="item.route" routerLinkActive="active">
+              {{ item.label }}
+            </a>
+          }
+        </div>
+      }
+    </div>
+  }
+</nav>

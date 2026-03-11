@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h1>Ventes Poulets</h1>
+  <button class="btn btn-primary" (click)="openCreate()">+ Nouvelle Vente</button>
+</div>
+
+<div class="card">
+  @if (items.length === 0) {
+    <div class="empty-state">Aucune vente enregistrée</div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Client</th>
+          <th>Quantité Totale</th>
+          <th>Montant Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.date_reg | date:'dd/MM/yyyy' }}</td>
+            <td>{{ item.client_nom || '-' }}</td>
+            <td>{{ item.quantite_totale || 0 }}</td>
+            <td>{{ (item.montant_total || 0) | number:'1.2-2' }}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-danger btn-sm" (click)="delete(item.id)">Supprimer</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showModal) {
+  <div class="modal-backdrop" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()" style="max-width: 650px;">
+      <h2>Nouvelle Vente Poulets</h2>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="form.date_reg">
+      </div>
+      <div class="form-group">
+        <label>Client</label>
+        <select [(ngModel)]="form.id_client">
+          <option [ngValue]="0" disabled>-- Choisir un client --</option>
+          @for (c of clients; track c.id) {
+            <option [ngValue]="c.id">{{ c.nom }}</option>
+          }
+        </select>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <label style="font-weight: 600; font-size: 13px; color: #555;">Détails</label>
+          <button class="btn btn-secondary btn-sm" (click)="addDetail()">+ Ligne</button>
+        </div>
+
+        @for (detail of form.details; track $index; let i = $index) {
+          <div style="display: flex; gap: 8px; margin-bottom: 8px; align-items: end;">
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+              <label>Lot</label>
+              <select [(ngModel)]="detail.id_lot">
+                <option [ngValue]="0" disabled>Lot</option>
+                @for (lot of lots; track lot.id) {
+                  <option [ngValue]="lot.id">Lot #{{ lot.id }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+              <label>Quantité</label>
+              <input type="number" [(ngModel)]="detail.quantite" min="0">
+            </div>
+            @if (form.details.length > 1) {
+              <button class="btn btn-danger btn-sm" (click)="removeDetail(i)" style="margin-bottom: 2px;">X</button>
+            }
+          </div>
+        }
+      </div>
+      <p style="font-size: 0.85rem; color: #666; margin-top: 8px;">💡 Le prix unitaire est calculé automatiquement selon le poids et le prix du gramme à la date de vente.</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="showModal = false">Annuler</button>
+        <button class="btn btn-primary" (click)="save()">Créer</button>
+      </div>
+    </div>
+  </div>
+}

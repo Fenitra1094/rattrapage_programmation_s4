@@ -1,0 +1,73 @@
+<div class="page-header">
+  <h1>Configuration Races</h1>
+  <button class="btn btn-primary" (click)="openCreate()">+ Nouvelle Configuration</button>
+</div>
+
+<div class="card">
+  @if (items.length === 0) {
+    <div class="empty-state">Aucune configuration enregistrée</div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Semaine</th>
+          <th>Consommation Nourriture</th>
+          <th>Augmentation Poids</th>
+          <th>Race</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.num_semaine }}</td>
+            <td>{{ item.consommation_nourriture | number:'1.2-2' }}</td>
+            <td>{{ item.augmentation_poids | number:'1.2-2' }}</td>
+            <td>{{ item.race_libelle || getRaceName(item.id_race) }}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-secondary btn-sm" (click)="openEdit(item)">Modifier</button>
+                <button class="btn btn-danger btn-sm" (click)="delete(item.id)">Supprimer</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showModal) {
+  <div class="modal-backdrop" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ editing ? 'Modifier' : 'Nouvelle' }} Configuration</h2>
+      <div class="form-group">
+        <label>Numéro de semaine</label>
+        <input type="number" [(ngModel)]="form.num_semaine" min="0">
+      </div>
+      <div class="form-group">
+        <label>Consommation Nourriture</label>
+        <input type="number" [(ngModel)]="form.consommation_nourriture" step="0.01" min="0">
+      </div>
+      <div class="form-group">
+        <label>Augmentation Poids</label>
+        <input type="number" [(ngModel)]="form.augmentation_poids" step="0.01" min="0">
+      </div>
+      <div class="form-group">
+        <label>Race</label>
+        <select [(ngModel)]="form.id_race">
+          <option [ngValue]="0" disabled>-- Choisir une race --</option>
+          @for (race of races; track race.id) {
+            <option [ngValue]="race.id">{{ race.libelle }}</option>
+          }
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="showModal = false">Annuler</button>
+        <button class="btn btn-primary" (click)="save()">{{ editing ? 'Modifier' : 'Créer' }}</button>
+      </div>
+    </div>
+  </div>
+}

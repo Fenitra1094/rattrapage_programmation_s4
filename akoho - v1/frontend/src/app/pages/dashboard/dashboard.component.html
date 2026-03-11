@@ -1,0 +1,103 @@
+<div class="page-header">
+  <h1>Dashboard</h1>
+</div>
+
+<!-- Filtre dates -->
+<div class="filter-bar card">
+  <div class="filter-group">
+    <label>Date début</label>
+    <input type="date" [(ngModel)]="dateMin">
+  </div>
+  <div class="filter-group">
+    <label>Date fin</label>
+    <input type="date" [(ngModel)]="dateMax">
+  </div>
+  <button class="btn btn-primary" (click)="search()" [disabled]="loading">
+    {{ loading ? 'Chargement...' : 'Filtrer' }}
+  </button>
+</div>
+
+<!-- Cards récapitulatives -->
+@if (resume) {
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="summary-label">Poulets (stock)</div>
+      <div class="summary-value">{{ resume.total_poulets }}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Oeufs (stock)</div>
+      <div class="summary-value">{{ resume.total_oeufs }}</div>
+    </div>
+    <div class="summary-card accent">
+      <div class="summary-label">CA Vente Poulets</div>
+      <div class="summary-value">{{ resume.ca_vente_poulets | number:'1.2-2' }}</div>
+    </div>
+    <div class="summary-card accent">
+      <div class="summary-label">CA Vente Oeufs</div>
+      <div class="summary-value">{{ resume.ca_vente_oeufs | number:'1.2-2' }}</div>
+    </div>
+    <div class="summary-card warn">
+      <div class="summary-label">Dépenses Nourriture</div>
+      <div class="summary-value">{{ resume.depenses_nourriture | number:'1.2-2' }}</div>
+    </div>
+    <div class="summary-card warn">
+      <div class="summary-label">Dépenses Achats</div>
+      <div class="summary-value">{{ resume.depenses_achats | number:'1.2-2' }}</div>
+    </div>
+    <div class="summary-card" [class.positive]="resume.benefice_net >= 0" [class.negative]="resume.benefice_net < 0">
+      <div class="summary-label">Bénéfice Net</div>
+      <div class="summary-value">{{ resume.benefice_net | number:'1.2-2' }}</div>
+    </div>
+  </div>
+
+  <!-- Tableau par lot -->
+  <div class="card" style="margin-top: 24px;">
+    <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #333;">Détails par lot</h2>
+    @if (lots.length === 0) {
+      <div class="empty-state">Aucun lot dans l'intervalle sélectionné</div>
+    } @else {
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Lot</th>
+              <th>Race</th>
+              <th>Date arrivée</th>
+              <th class="num">Poulets</th>
+              <th class="num">Oeufs</th>
+              <th class="num">CA Poulets</th>
+              <th class="num">CA Oeufs</th>
+              <th class="num">Dép. Nourriture</th>
+              <th class="num">Dép. Achats</th>
+              <th class="num">Bénéfice</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (lot of lots; track lot.id) {
+              <tr>
+                <td>#{{ lot.id }}</td>
+                <td>{{ lot.race_libelle }}</td>
+                <td>{{ lot.date_arrivee | date:'dd/MM/yyyy' }}</td>
+                <td class="num">{{ lot.nb_poulets }}</td>
+                <td class="num">{{ lot.nb_oeufs }}</td>
+                <td class="num">{{ lot.ca_vente_poulets | number:'1.2-2' }}</td>
+                <td class="num">{{ lot.ca_vente_oeufs | number:'1.2-2' }}</td>
+                <td class="num">{{ lot.depenses_nourriture | number:'1.2-2' }}</td>
+                <td class="num">{{ lot.depenses_achats | number:'1.2-2' }}</td>
+                <td class="num" [style.color]="lot.benefice_net >= 0 ? '#16a34a' : '#dc2626'" style="font-weight: 600;">
+                  {{ lot.benefice_net | number:'1.2-2' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}
+
+@if (!resume && !loading) {
+  <div class="card" style="margin-top: 24px;">
+    <div class="empty-state">Sélectionnez une période puis cliquez sur "Filtrer" pour afficher le tableau de bord.</div>
+  </div>
+}

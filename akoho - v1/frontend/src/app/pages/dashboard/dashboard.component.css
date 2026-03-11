@@ -1,0 +1,93 @@
+.filter-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-group label {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #555;
+}
+
+.filter-group input {
+  padding: 9px 12px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  font-size: 13.5px;
+  color: #333;
+  background: #fff;
+}
+
+.filter-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+/* Summary cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  padding: 20px;
+  border-left: 4px solid #e5e7eb;
+}
+
+.summary-card.accent {
+  border-left-color: #2563eb;
+}
+
+.summary-card.warn {
+  border-left-color: #f59e0b;
+}
+
+.summary-card.positive {
+  border-left-color: #16a34a;
+}
+
+.summary-card.negative {
+  border-left-color: #dc2626;
+}
+
+.summary-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.summary-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+}
+
+.summary-card.positive .summary-value {
+  color: #16a34a;
+}
+
+.summary-card.negative .summary-value {
+  color: #dc2626;
+}
+
+/* Table numeric columns */
+th.num, td.num {
+  text-align: right;
+}

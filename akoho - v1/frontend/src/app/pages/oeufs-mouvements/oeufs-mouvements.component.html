@@ -1,0 +1,119 @@
+<div class="page-header">
+  <h1>Mouvements Oeufs</h1>
+  <button class="btn btn-primary" (click)="openCreate()">+ Nouveau Mouvement</button>
+  <button class="btn btn-primary" (click)="openEclosion()">+ Faire eclore des oeufs</button>
+</div>
+
+<div class="card">
+  @if (items.length === 0) {
+    <div class="empty-state">Aucun mouvement enregistré</div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Quantité</th>
+          <th>Référence</th>
+          <th>Raison</th>
+          <th>Lot</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.date_reg | date:'dd/MM/yyyy' }}</td>
+            <td>{{ item.quantite }}</td>
+            <td>{{ item.reference }}</td>
+            <td>{{ item.raison_libelle || getRaisonLabel(item.id_raison_mouvement) }}</td>
+            <td>Lot #{{ item.id_lot }}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-secondary btn-sm" (click)="openEdit(item)">Modifier</button>
+                <button class="btn btn-danger btn-sm" (click)="delete(item.id)">Supprimer</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showModal) {
+  <div class="modal-backdrop" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ editing ? 'Modifier' : 'Nouveau' }} Mouvement Oeuf</h2>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="form.date_reg">
+      </div>
+      <div class="form-group">
+        <label>Quantité</label>
+        <input type="number" [(ngModel)]="form.quantite">
+      </div>
+      <div class="form-group">
+        <label>Référence</label>
+        <input type="text" [(ngModel)]="form.reference" placeholder="Référence">
+      </div>
+      <div class="form-group">
+        <label>Remarque</label>
+        <input type="text" [(ngModel)]="form.remarque" placeholder="Remarque">
+      </div>
+      <div class="form-group">
+        <label>Lot</label>
+        <select [(ngModel)]="form.id_lot">
+          <option [ngValue]="0" disabled>-- Choisir un lot --</option>
+          @for (lot of lots; track lot.id) {
+            <option [ngValue]="lot.id">Lot #{{ lot.id }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Raison</label>
+        <select [(ngModel)]="form.id_raison_mouvement">
+          <option [ngValue]="0" disabled>-- Choisir une raison --</option>
+          @for (raison of raisons; track raison.id) {
+            <option [ngValue]="raison.id">{{ raison.libelle }}</option>
+          }
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="showModal = false">Annuler</button>
+        <button class="btn btn-primary" (click)="save()">{{ editing ? 'Modifier' : 'Créer' }}</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showEclosionModal) {
+  <div class="modal-backdrop" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Formulaire d'eclosion</h2>
+      <div class="form-group">
+        <label>Lot</label>
+        <select [(ngModel)]="eclosionForm.id">
+          <option [ngValue]="0" disabled>-- Choisir un lot --</option>
+          @for (lot of lots; track lot.id) {
+            <option [ngValue]="lot.id">Lot #{{ lot.id }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="eclosionForm.date_eclosion">
+      </div>
+      <div class="form-group">
+        <label>Quantité</label>
+        <input type="number" [(ngModel)]="eclosionForm.quantite_oeufs">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="showEclosionModal = false">Annuler</button>
+        <button class="btn btn-primary" (click)="saveEclosion()">Valider</button>
+      </div>
+    </div>
+  </div>
+}
+

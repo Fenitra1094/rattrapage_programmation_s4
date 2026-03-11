@@ -1,0 +1,107 @@
+<div class="page-header">
+  <h1>Lots</h1>
+  <button class="btn btn-primary" (click)="openCreate()">+ Nouveau Lot</button>
+</div>
+
+<div class="card">
+  @if (items.length === 0) {
+    <div class="empty-state">Aucun lot enregistré</div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date d'arrivée</th>
+          <th>Âge (semaines)</th>
+          <th>Poids initial</th>
+          <th>Race</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.date_arrivee | date:'dd/MM/yyyy' }}</td>
+            <td>{{ item.age }}</td>
+            <td>{{ item.poids_initial }}</td>
+            <td>{{ item.race_libelle || getRaceName(item.id_race) }}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-secondary btn-sm" (click)="openEdit(item)">Modifier</button>
+                <button class="btn btn-danger btn-sm" (click)="delete(item.id)">Supprimer</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showModal) {
+  <div class="modal-backdrop" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ editing ? 'Modifier' : 'Nouveau' }} Lot</h2>
+
+      <div class="form-group">
+        <label>Date d'arrivée</label>
+        <input type="date" [(ngModel)]="form.date_arrivee">
+      </div>
+
+      <div class="form-group">
+        <label>Âge (semaines)</label>
+        <input type="number" [(ngModel)]="form.age" min="0">
+      </div>
+
+      <div class="form-group">
+        <label>Poids initial</label>
+        <input type="number" [(ngModel)]="form.poids_initial" min="0">
+      </div>
+
+      <div class="form-group">
+        <label>Race</label>
+        <select [(ngModel)]="form.id_race">
+          <option [ngValue]="0" disabled>-- Choisir une race --</option>
+          @for (race of races; track race.id) {
+            <option [ngValue]="race.id">{{ race.libelle }}</option>
+          }
+        </select>
+      </div>
+
+      @if (!editing) {
+        <hr style="margin: 20px 0; border: 1px solid #e0e0e0;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 15px;">Achat initial (optionnel)</h3>
+
+        <div class="form-group">
+          <label>Quantité de poulets</label>
+          <input type="number" [(ngModel)]="form.quantite" min="0" placeholder="Nombre de poulets">
+        </div>
+
+        <div class="form-group">
+          <label>Prix unitaire (Ar)</label>
+          <input type="number" [(ngModel)]="form.prix_unitaire" min="0" step="0.01" placeholder="Prix par poulet">
+        </div>
+
+        <div class="form-group">
+          <label>Fournisseur</label>
+          <select [(ngModel)]="form.id_fournisseur">
+            <option [ngValue]="null">-- Choisir un fournisseur --</option>
+            @for (fournisseur of fournisseurs; track fournisseur.id) {
+              <option [ngValue]="fournisseur.id">{{ fournisseur.nom }}</option>
+            }
+          </select>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+          💡 Si vous remplissez les champs d'achat, cela créera automatiquement l'achat et le mouvement d'entrée.
+        </p>
+      }
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="showModal = false">Annuler</button>
+        <button class="btn btn-primary" (click)="save()">{{ editing ? 'Modifier' : 'Créer' }}</button>
+      </div>
+    </div>
+  </div>
+}

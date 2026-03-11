@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1>Clients</h1>
+  <button class="btn btn-primary" (click)="openCreate()">+ Nouveau Client</button>
+</div>
+
+<div class="card">
+  @if (items.length === 0) {
+    <div class="empty-state">Aucun client enregistré</div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.nom }}</td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-secondary btn-sm" (click)="openEdit(item)">Modifier</button>
+                <button class="btn btn-danger btn-sm" (click)="delete(item.id)">Supprimer</button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showModal) {
+  <div class="modal-backdrop" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ editing ? 'Modifier' : 'Nouveau' }} Client</h2>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" [(ngModel)]="form.nom" placeholder="Nom du client">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="showModal = false">Annuler</button>
+        <button class="btn btn-primary" (click)="save()">{{ editing ? 'Modifier' : 'Créer' }}</button>
+      </div>
+    </div>
+  </div>
+}
